@@ -18,13 +18,12 @@ use Illuminate\Support\Facades\Route;
 // -----   for admin   -----
 Auth::routes();
 
-Route::get('admin', function ()
-{
-    return redirect()->route('home');
+Route::get('admin', function (){
+    return redirect()->route('homeAdmin');
 });
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('homeAdmin');
 
 // -----   for user   -----
-Route::get('/', [SiteController::class, 'index']);
-Route::get('/news', [SiteController::class, 'news'])->middleware('auth');
+Route::get('/', [SiteController::class, 'index'])->name('home');
+Route::get('/about', [SiteController::class, 'about'])->name('about');
 

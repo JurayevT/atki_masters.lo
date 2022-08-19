@@ -12,8 +12,8 @@ class SiteController extends Controller
         return view('user.site.index');
     }
 
-    public function news()
+    public function about()
     {
-        return view('user.site.news');
+        return view('user.site.about');
     }
 }

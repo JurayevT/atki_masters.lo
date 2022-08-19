@@ -15,19 +15,19 @@
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/">Bosh sahifa</a>
+            <a class="nav-link" aria-current="page" href="{{ route('home') }}">Bosh sahifa</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/news">Yangiliklar</a>
+            <a class="nav-link" href="">Yangiliklar</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/news">Tuzilma</a>
+            <a class="nav-link" href="">E'lonlar</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/news">Tuzilma</a>
+            <a class="nav-link" href="">Tuzilma</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/news">Biz haqimizda</a>
+            <a class="nav-link" href="{{ route('about') }}">Biz haqimizda</a>
           </li>
         </ul>
         <form class="d-flex">
