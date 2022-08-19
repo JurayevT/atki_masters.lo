@@ -9,11 +9,11 @@ class SiteController extends Controller
     //
     public function index()
     {
-        return view('site.index');
+        return view('user.site.index');
     }
 
     public function news()
     {
-        return view('site.news');
+        return view('user.site.news');
     }
 }

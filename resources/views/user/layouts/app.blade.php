@@ -11,7 +11,7 @@
   <title>ATKI fakulteti</title>
 </head>
 <body>
-  @include('layout.header')
+  @include('user.layouts.header')
   
   <div class="container my-3 my-md-4 my-lg-5">  
     <main>
@@ -19,7 +19,7 @@
     </main>
   </div>
 
-  @include('layout.footer')
+  @include('user.layouts.footer')
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
