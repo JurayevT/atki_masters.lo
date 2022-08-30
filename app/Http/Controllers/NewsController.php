@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class NewsController extends Controller
 {
@@ -12,6 +13,10 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function indexAdmin()
+    {
+        return view('admin.news.index');
+    }
     public function index()
     {
         $news = News::query()->orderBy('id', 'ASC')->paginate();
@@ -25,7 +30,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.news.create');
     }
 
     /**
@@ -36,7 +41,35 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'category' => 'required|max:100',
+            'news_foto' => 'required|mimes:jpg|max:5120',
+            'news_title' => 'required|max:255',
+            'news_content' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->with("error", "Ma'lumot kiritishda xatolik kuzatildi")->withInput();
+        }
+
+        $data = new News;
+        $data->category = $request->category;
+        $data->author_id = auth('web')->user()->id;
+        
+        $title = str_split(trim($request->news_title), 5);
+
+        if ($request->file('news_foto')) {
+            $extension = $request->file('news_foto')->getClientOriginalExtension();
+            $fileNameToStore = $title[0] . rand(1, 99) . '_' . time() . '.' . $extension;
+            $request->file('news_foto')->storeAs('news', $fileNameToStore, 'public');
+            $data->news_foto = "news/" . $fileNameToStore;
+        }
+
+        $data->news_title = $request->news_title;
+        $data->news_content = $request->news_content;
+
+        $data->save();
+        return redirect()->route('ad.news.index')->with("success", "Ma'lumot yuborildi");
     }
 
     /**
