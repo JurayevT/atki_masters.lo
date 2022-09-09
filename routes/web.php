@@ -31,7 +31,7 @@ Route::prefix('ad')->name('ad.')->group(function () {
         Route::get('/news', [NewsController::class, 'indexAdmin'])->name('news.index');
         Route::get('/news/create', [NewsController::class, 'create'])->name('news.create');
         Route::post('/news', [NewsController::class, 'store'])->name('news.store');
-        Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
+        
         Route::get('/news/edit/{id}', [NewsController::class, 'edit'])->name('news.edit');
         Route::put('/news/edit/{id}', [NewsController::class, 'update'])->name('news.update');
         Route::delete('/news/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
@@ -45,4 +45,5 @@ Route::prefix('ad')->name('ad.')->group(function () {
     Route::get('/', [SiteController::class, 'index'])->name('home');
     Route::get('/about', [SiteController::class, 'about'])->name('about');
    
-
+    Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+    Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');

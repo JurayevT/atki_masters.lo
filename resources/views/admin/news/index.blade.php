@@ -3,27 +3,42 @@
 @section('content')
 <div class="container">
     <a href="{{ route('ad.news.create') }}" class="btn btn-success ms-3 mb-3">Qo'shish</a>
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-10">
-               @foreach ($news as $new)
-                   <div class="card my-3 mx-2 p-0 shadow-sm" style="float: left; width:18rem">
-                       <img class="card-img-top" src="{{ '/storage/' . $new->news_foto }}" style="height:15rem" alt="Card image cap">
-                       <div class="card-body">
-                       <h5 class="card-title">{{ $new->news_title }}</h5>
-                       <p class="card-text">{{ Str::of($new->news_content)->limit(65, ' ...') }}</p>
-                       <a href="{{ route('ad.news.show') }}" class="btn btn-primary">Batafsil...</a>
-                       <span style="float: right; font-size:1.2rem; color:rgb(8, 158, 58)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
-                          </svg>
-                        {{ $new->views }}
-                    </span>
-                       </div>
-                   </div>
-               @endforeach
+    <div class="row justify-content-start">
+        <div class="col-md-10">
+            <table class="table">
+                <thead>
+                  <tr class="text-center">
+                    <th>Id</th>
+                    <th>Rasm</th>
+                    <th>Sarlavha</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    @foreach ($news as $new)
+                    <tr class="text-center">
+                        <td>{{ $new->id }}</td>
+                        <td style="width: 30%">
+                            <img class="card-img-top" src="{{ '/storage/' . $new->news_foto }}" alt="{{ $new->news_title }}" style="max-height: 20vw">
+                        </td>
+                        <td>
+                            <p class="mt-3 mt-md-5 fs-4">{{ $new->news_title }}</p>
+                        </td>
+                        <td>
+                            <div class="mt-3 mt-md-5">
+                                <a href="{{ route('ad.news.edit', $new->id) }}" class="btn btn-warning">Update</a>
+                                <form action="{{ route('ad.news.destroy', $new->id) }}" data-confirm="test" class="d-inline" method="post" >
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-danger">Dalete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+        </table>
         </div>
-
     </div>
 </div>
 @endsection

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\News;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class NewsController extends Controller
@@ -18,9 +20,10 @@ class NewsController extends Controller
         $news = News::all();
         return view('admin.news.index', compact('news'));
     }
-    public function index()
+    public function index(Request $request)
     {
-        $news = News::query()->orderBy('id', 'ASC')->paginate();
+        $news = News::all();
+
         return view('user.news.index', compact('news'));
     }
 
@@ -79,9 +82,36 @@ class NewsController extends Controller
      * @param  \App\Models\News  $news
      * @return \Illuminate\Http\Response
      */
-    public function show(News $news)
+    public function show(Request $request, $id)
     {
-        //
+        $news = News::findOrFail($id);
+
+        $user = User::findOrFail($news->author_id);
+
+        static $kirdi = false;
+
+        if (isset($user_ip_address) && $user_ip_address != $request->ip()) {
+            $request->session()->forget('id');
+        }
+
+        if ($request->session()->has('id') and $id != $request->session()->get('id')) {
+            $kirdi = false;
+        }
+        if ($id == $request->session()->get('id')) {
+            $kirdi = true;
+        }
+
+        $user_ip_address=$request->ip();
+
+        if (!$kirdi) {
+            $news->views++;
+            $news->save();
+            $kirdi=true;
+        }
+        
+        $request->session()->put('id', $id);
+
+        return view('user.news.show', compact('news', 'user'));
     }
 
     /**

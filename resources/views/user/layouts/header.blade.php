@@ -18,7 +18,7 @@
             <a class="nav-link" aria-current="page" href="{{ route('home') }}">Bosh sahifa</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Yangiliklar</a>
+            <a class="nav-link" href="{{ route('news.index') }}">Yangiliklar</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="">E'lonlar</a>
