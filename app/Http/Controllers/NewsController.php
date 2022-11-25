@@ -62,6 +62,11 @@ class NewsController extends Controller
         
         $title = str_split(trim($request->news_title), 5);
 
+        $title[0] = str_replace(' ', '', $title[0]);
+        $title[0] = str_replace('"', '', $title[0]);
+        $title[0] = str_replace("'", '', $title[0]);
+        $title[0] = str_replace("-", '', $title[0]);
+
         if ($request->file('news_foto')) {
             $extension = $request->file('news_foto')->getClientOriginalExtension();
             $fileNameToStore = $title[0] . rand(1, 99) . '_' . time() . '.' . $extension;
@@ -120,9 +125,11 @@ class NewsController extends Controller
      * @param  \App\Models\News  $news
      * @return \Illuminate\Http\Response
      */
-    public function edit(News $news)
+    public function edit($id)
     {
-        //
+        $news = News::findOrFail($id);
+
+        return view('admin.news.update', compact('news'));
     }
 
     /**
@@ -143,8 +150,12 @@ class NewsController extends Controller
      * @param  \App\Models\News  $news
      * @return \Illuminate\Http\Response
      */
-    public function destroy(News $news)
+    public function destroy($id)
     {
-        //
+        $news = News::findOrFail($id);
+
+        $news->delete();
+
+        return redirect()->route('ad.news.index')->with("error", "Ma'lumot o'chirildi");
     }
 }

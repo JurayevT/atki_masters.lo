@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h2 class="my-3">Yangilik qo'shish</h2>
+            <h2 class="my-3">Yangilik o'zgartirish sahifasi</h2>
             @if ($message = Session::get('success'))
                 <div class="alert alert-success mb-2 py-2" role="alert">
                     <div>{{ $message }}</div>
@@ -15,12 +15,12 @@
                     <div>{{ $message }}</div>
                 </div>
             @endif 
-            <form method="post" action="{{ route('ad.news.store') }}" enctype="multipart/form-data">
+            <form method="post" action="{{ route('ad.news.update', $news->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('post')
                 <div class="form-group my-3">
                   <label for="category">Yangilik katogoriyasi</label>
-                  <input type="text" class="form-control" name="category" placeholder="ta'lim, sport..." required>
+                  <input type="text" class="form-control" name="category" value="{{ old($news->category) }}" required>
                 </div>
                 <div class="form-group my-3">
                   <label for="news_foto">Foto</label>
