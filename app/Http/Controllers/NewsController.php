@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Validator;
 
 class NewsController extends Controller
 {
+    // for Admin
+
     /**
      * Display a listing of the resource.
      *
@@ -80,46 +82,7 @@ class NewsController extends Controller
         $data->save();
         return redirect()->route('ad.news.index')->with("success", "Ma'lumot yuborildi");
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\News  $news
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Request $request, $id)
-    {
-        $news = News::findOrFail($id);
-
-        $user = User::findOrFail($news->author_id);
-
-        static $kirdi = false;
-
-        if (isset($user_ip_address) && $user_ip_address != $request->ip()) {
-            $request->session()->forget('id');
-        }
-
-        if ($request->session()->has('id') and $id != $request->session()->get('id')) {
-            $kirdi = false;
-        }
-        if ($id == $request->session()->get('id')) {
-            $kirdi = true;
-        }
-
-        $user_ip_address=$request->ip();
-
-        if (!$kirdi) {
-            $news->views++;
-            $news->save();
-            $kirdi=true;
-        }
-        
-        $request->session()->put('id', $id);
-
-        return view('user.news.show', compact('news', 'user'));
-    }
-
-    /**
+        /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\News  $news
@@ -157,5 +120,45 @@ class NewsController extends Controller
         $news->delete();
 
         return redirect()->route('ad.news.index')->with("error", "Ma'lumot o'chirildi");
+    }
+
+    // for User
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\News  $news
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request, $id)
+    {
+        $news = News::findOrFail($id);
+
+        $user = User::findOrFail($news->author_id);
+
+        static $kirdi = false;
+
+        if (isset($user_ip_address) && $user_ip_address != $request->ip()) {
+            $request->session()->forget('id');
+        }
+
+        if ($request->session()->has('id') and $id != $request->session()->get('id')) {
+            $kirdi = false;
+        }
+        if ($id == $request->session()->get('id')) {
+            $kirdi = true;
+        }
+
+        $user_ip_address=$request->ip();
+
+        if (!$kirdi) {
+            $news->views++;
+            $news->save();
+            $kirdi=true;
+        }
+        
+        $request->session()->put('id', $id);
+
+        return view('user.news.show', compact('news', 'user'));
     }
 }

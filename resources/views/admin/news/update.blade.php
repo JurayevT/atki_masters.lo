@@ -20,7 +20,7 @@
                 @method('post')
                 <div class="form-group my-3">
                   <label for="category">Yangilik katogoriyasi</label>
-                  <input type="text" class="form-control" name="category" value="{{ old($news->category) }}" required>
+                  <input type="text" class="form-control" name="category" value="{{ $news->category }}" required>
                 </div>
                 <div class="form-group my-3">
                   <label for="news_foto">Foto</label>
@@ -28,11 +28,11 @@
                 </div>
                 <div class="form-group my-3">
                   <label for="news_title">Sarlavha</label>
-                  <input type="text" class="form-control" name="news_title" placeholder="yangilik sarlavhasini kiriting" required>
+                  <input type="text" class="form-control" name="news_title" placeholder="yangilik sarlavhasini kiriting" value="{{ $news->news_title }}" required>
                 </div>
                 <div class="form-group my-3">
                   <label for="news_content">Yangilik contenti</label>
-                  <textarea class="form-control" name="news_content" rows="3" required></textarea>
+                  <textarea class="form-control" name="news_content" rows="3" required>{{ $news->news_content }}</textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Qo'shish</button>
               </form>
